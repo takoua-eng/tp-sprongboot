@@ -1,17 +1,14 @@
 package tn.esprit.tp.Model;
 
-
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Getter
 @Setter
 public class Bloc {
@@ -19,5 +16,12 @@ public class Bloc {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idBloc;
     private String nomBloc;
-    private long capaciteBLoc;
+    private Long capaciteBloc;
+
+    @ManyToOne
+    @JoinColumn(name = "foyer_id")
+    private Foyer foyer;
+
+    @OneToMany(mappedBy = "bloc", cascade = CascadeType.ALL)
+    private List<Chambre> chambres;
 }
