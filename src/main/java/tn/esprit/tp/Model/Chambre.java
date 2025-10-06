@@ -2,28 +2,30 @@ package tn.esprit.tp.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Chambre {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idChambre;
-    private Long numeroChambre;
+    Long idChambre;
+
+    public long numeroChambre;
 
     @Enumerated(EnumType.STRING)
-    private TypeChambre typeC;
+    TypeChambre typeC;
 
     @ManyToOne
-    @JoinColumn(name = "bloc_id")
-    private Bloc bloc;
+    Bloc bloc;
 
-    @OneToMany(mappedBy = "chambre", cascade = CascadeType.ALL)
-    private List<Reservation> reservations;
+    @OneToMany
+    List<Reservation> reservations;
 }

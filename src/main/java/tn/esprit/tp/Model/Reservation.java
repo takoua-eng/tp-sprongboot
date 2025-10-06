@@ -2,29 +2,27 @@ package tn.esprit.tp.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import lombok.experimental.FieldDefaults;
 import java.util.Date;
+import java.util.List;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@Entity 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Reservation {
+
     @Id
-    private String idReservation; // dans ton diagramme c’est un String
+    String idReservation;
 
     @Temporal(TemporalType.DATE)
-    private Date anneeUniversitaire;
+    Date anneeUniversitaire;
 
-    private boolean estValide;
+    boolean estValide;
 
-    @ManyToOne
-    @JoinColumn(name = "chambre_id")
-    private Chambre chambre;
-
-    @ManyToOne
-    @JoinColumn(name = "etudiant_id")
-    private Etudiant etudiant;
+    @ManyToMany
+    List<Etudiant> etudiants;
 }

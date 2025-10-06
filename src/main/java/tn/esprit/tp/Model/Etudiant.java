@@ -2,28 +2,31 @@ package tn.esprit.tp.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import lombok.experimental.FieldDefaults;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Etudiant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idEtudiant;
-    private String nomEt;
-    private String prenomEt;
-    private Long cin;
-    private String ecole;
+    Long idEtudiant;
+
+    String nomEt;
+    String prenomEt;
+    long cin;
+    String ecole;
 
     @Temporal(TemporalType.DATE)
-    private Date dateNaissance;
+    Date dateNaissance;
 
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
-    private List<Reservation> reservations;
+    @ManyToMany(mappedBy = "etudiants")
+    List<Reservation> reservations;
 }

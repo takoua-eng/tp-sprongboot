@@ -2,26 +2,29 @@ package tn.esprit.tp.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Foyer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idFoyer;
-    private String nomFoyer;
-    private Long capaciteFoyer;
+    Long idFoyer;
 
-    @OneToOne
-    @JoinColumn(name = "universite_id")
-    private Universite universite;
+    String nomFoyer;
+    long capaciteFoyer;
 
-    @OneToMany(mappedBy = "foyer", cascade = CascadeType.ALL)
-    private List<Bloc> blocs;
+    @OneToOne(mappedBy = "foyer")
+    Universite universite;
+
+    @OneToMany(mappedBy = "foyer")
+    List<Bloc> blocs;
 }
+
